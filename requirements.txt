@@ -1,5 +1,8 @@
+streamlit
+google-generativeai
+numpy
 faiss-cpu
 sentence-transformers
-transformers
-torch
-openai
+pypdf
+
+
