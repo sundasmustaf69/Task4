@@ -23,6 +23,7 @@ st.markdown("""
 # -----------------------
 if "docstore" not in st.session_state:
     st.session_state.docstore: List[str] = []
+
 if "messages" not in st.session_state:
     st.session_state.messages: List[dict] = []
 
@@ -30,11 +31,19 @@ if "messages" not in st.session_state:
 # Sidebar: Settings + KB Upload
 # -----------------------
 with st.sidebar:
-    st.header("⚙️ Settings")
+    st.header("⚙ Settings")
     api_key = st.text_input("🔑 Gemini API Key", type="password")
-    model_name = st.selectbox("🧠 Model", ["gemini-1.5-flash", "gemini-1.5-pro"])
+    model_name = st.selectbox(
+        "🧠 Model",
+        [
+            "models/gemini-2.5-flash",
+            "models/gemini-2.5-pro",
+            "models/gemini-pro-latest",
+            "models/gemini-flash-latest"
+        ]
+    )
     temperature = st.slider("🌡 Temperature", 0.0, 1.0, 0.7, 0.1)
-    max_tokens = st.slider("📝 Max Tokens", 100, 2048, 512, 50)
+    max_tokens = st.number_input("📝 Max Tokens", min_value=50, max_value=2000, value=500, step=50)
 
     st.markdown("---")
     st.subheader("Knowledge Base")
@@ -105,8 +114,7 @@ def rag_pipeline(question):
     prompt = f"""
 You are a helpful AI assistant. Use the following context to answer the question.
 
-Context:
-{context}
+Context: {context}
 
 Question: {question}
 
@@ -116,7 +124,7 @@ Answer in a clear and human-like way:
         prompt,
         generation_config=genai.types.GenerationConfig(
             temperature=temperature,
-            max_output_tokens=max_tokens
+            max_output_tokens=int(max_tokens)  # ✅ Mex token added
         )
     )
     return response.text
@@ -124,7 +132,7 @@ Answer in a clear and human-like way:
 # -----------------------
 # Main Chat UI
 # -----------------------
-st.title("🤖 Task 4 — RAG Chat (Gemini)")
+st.title("🤖  RAG Chat (Gemini)")
 
 user_input = st.text_area("💬 Ask your question:", height=120)
 if st.button("Ask ✨") and user_input:
