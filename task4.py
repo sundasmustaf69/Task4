@@ -48,8 +48,6 @@ with st.sidebar:
         "🧠 Model",
         [
             "models/gemini-2.5-flash",
-            "models/gemini-2.5-pro",
-            "models/gemini-pro-latest",
             "models/gemini-flash-latest"
         ]
     )
@@ -157,3 +155,4 @@ for msg in st.session_state.messages:
         st.markdown(f"<div class='user'>🧑 <b>You:</b> {msg['content']}</div>", unsafe_allow_html=True)
     else:
         st.markdown(f"<div class='ai'>🤖 <b>AI:</b> {msg['content']}</div>", unsafe_allow_html=True)
+
