@@ -12,9 +12,20 @@ st.set_page_config(page_title="Task 4 — RAG Chat (Gemini)", page_icon="🤖", 
 
 st.markdown("""
 <style>
-.stApp { background-color: #f6f8fb; }
-.user { background:#e6f2ff; padding:10px; border-radius:10px; margin-bottom:5px;}
-.ai { background:#f3f7e8; padding:10px; border-radius:10px; margin-bottom:5px;}
+.stApp {
+    background-color: #ffcce0;
+    color: #000000;
+}
+.user {
+    background:#ffcce0;
+    color:#000000;
+    padding:10px; border-radius:10px; margin-bottom:5px;
+}
+.ai {
+    background:#ffcce0;
+    color:#000000;
+    padding:10px; border-radius:10px; margin-bottom:5px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -124,7 +135,7 @@ Answer in a clear and human-like way:
         prompt,
         generation_config=genai.types.GenerationConfig(
             temperature=temperature,
-            max_output_tokens=int(max_tokens)  # ✅ Mex token added
+            max_output_tokens=int(max_tokens)
         )
     )
     return response.text
